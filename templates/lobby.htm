@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Game Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-5">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold mb-4">Bingo Game Status</h1>
+        <button id="refresh-button" class="mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Refresh</button>
+        
+        <div class="game mb-4 p-4 border-b border-gray-200 flex justify-between items-center" data-status="active">
+            <div class="game-info">
+                <span class="status text-green-500 font-semibold">Active Game</span>
+                <span class="bonus text-gray-600">Bonus: 20</span>
+                <span class="players text-gray-600">Players: 40</span>
+                <span class="balance text-gray-600">624 ETB</span>
+            </div>
+            <button class="play-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Play</button>
+        </div>
+        
+        <div class="game mb-4 p-4 border-b border-gray-200 flex justify-between items-center" data-status="inactive">
+            <div class="game-info">
+                <span class="status text-red-500 font-semibold">Inactive Game</span>
+                <span class="bonus text-gray-600">Bonus: 50</span>
+                <span class="players text-gray-600">Players: 46</span>
+                <span class="balance text-gray-600">1840 ETB</span>
+            </div>
+            <button class="play-button bg-gray-300 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Play</button>
+        </div>
+        
+        <div class="game mb-4 p-4 border-b border-gray-200 flex justify-between items-center" data-status="active">
+            <div class="game-info">
+                <span class="status text-green-500 font-semibold">Active Game</span>
+                <span class="bonus text-gray-600">Bonus: 100</span>
+                <span class="players text-gray-600">Players: 37</span>
+                <span class="balance text-gray-600">2960 ETB</span>
+            </div>
+            <button class="play-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Play</button>
+        </div>
+    </div>
+    
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='lobby.js') }}"></script>
+</body>
+</html>

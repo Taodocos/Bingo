@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Multiplayer Bingo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stayles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Multiplayer Bingo</h1>
+        <div id="user"></div>
+        <button id="ready">✅ I'm Ready</button>
+        <div id="call-number"></div>
+        <table id="card" class="bingo-card"></table>
+    </div>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

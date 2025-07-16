@@ -1,0 +1,237 @@
+body {
+    background-color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+/* 
+.container {
+    padding: 20px;
+}
+
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.number {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+}
+
+.number.selected {
+    background-color: #ffcc00; 
+}
+
+.selected-card {
+    margin-top: 20px;
+    background-color: #d1a96d;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+
+.card-cell {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+button {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+
+
+
+ */
+
+
+ /* First Page Styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.number {
+    padding: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.number:hover {
+    background-color: #f0f0f0;
+}
+
+.number.selected {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.selected-card {
+    margin: 20px auto;
+    max-width: 300px;
+}
+
+.card-header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-weight: bold;
+    background-color: #d9534f;
+    color: white;
+}
+
+.card-header-cell {
+    padding: 10px;
+    text-align: center;
+}
+
+.card-body {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    border: 1px solid #ddd;
+}
+
+.card-cell {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-cell.free-space {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #5bc0de;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background-color: #46b8da;
+}
+
+/* Game Page Styles (same as previous game.htm styles) */
+
+
+/* Bingo Card Styles */
+.card-header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-weight: bold;
+    background-color: #d9534f;
+    color: white;
+    text-align: center;
+}
+
+.card-header-cell {
+    padding: 10px;
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 2px;
+    background-color: #ddd;
+    padding: 2px;
+}
+
+.card-cell {
+    background-color: white;
+    padding: 15px 5px;
+    text-align: center;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-cell.free-space {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+/* Number grid styles */
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Changed from 15 to 5 columns */
+    gap: 3px; /* Adjusted gap for better spacing */
+    margin: 20px auto; /* Center the grid */
+    max-width: 600px; /* Set a max width for the grid */
+}
+
+.number {
+    padding: 15px; /* Increased padding for better touch targets */
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center
+}
+
+.number:hover {
+    background-color: #f0f0f0;
+}
+
+.number.selected {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.number.taken {
+    background-color: red; /* Color for taken cards */
+    color: white;          /* Text color for better visibility */
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #5bc0de;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background-color: #46b8da;
+}
