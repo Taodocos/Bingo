@@ -3,16 +3,13 @@ eventlet.monkey_patch()
 
 import os
 import random
-import time
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
-from threading import Thread, Timer
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "super_secret_key"
 socketio = SocketIO(app, async_mode='eventlet')
 
-# Initialize game state
 game_state = {
     "players": {},
     "started": False,
@@ -40,9 +37,10 @@ def call_numbers():
             numbers[letter].remove(number)
             game_state["called_numbers"].add(called_number)
 
-            socketio.sleep(5) 
+            socketio.sleep(5)
             socketio.emit('call_number', {'number': called_number})
             print(f"Called number: {called_number}")
+
 
 def start_game_if_ready():
     print(f"Waiting players: {game_state['waiting_players']}")
@@ -55,22 +53,26 @@ def start_game_if_ready():
             socketio.sleep(1)
             socketio.emit("game_starting_soon", i)
 
-        socketio.start_background_task(call_numbers)  # ✅ instead of Thread
+        socketio.start_background_task(call_numbers)
         socketio.emit("game_started")
     else:
         socketio.emit("not_enough_players", {"message": "Waiting for more players..."})
+
 
 @app.route('/')
 def index():
     return render_template('lobby.htm')
 
+
 @app.route('/select')
 def card():
     return render_template('first.htm')
 
+
 @app.route('/bingo')
 def bingo():
     return render_template('game.htm')
+
 
 @socketio.on('player_ready')
 def handle_player_ready(data):
@@ -82,15 +84,17 @@ def handle_player_ready(data):
         game_state["players"][player_id] = data['layout']
         print(f"Current waiting players: {game_state['waiting_players']}")
 
-        # Emit waiting notification
-        print(f"Emitting waiting_notification for player {player_id}.")
         socketio.emit('waiting_notification', {
             'message': f'Player {player_id} is ready. Please wait for the game to start.'
         })
 
-        # Start timer
-        Timer(game_state["waiting_time"], start_game_if_ready).start()
-        print("Timer started for checking if the game can start.")
+        # 🔴 REMOVE Timer
+        # ✅ Replace with async background task
+        def delayed_start():
+            socketio.sleep(game_state["waiting_time"])
+            start_game_if_ready()
+
+        socketio.start_background_task(delayed_start)
 
 
 @socketio.on('select_card')
@@ -106,11 +110,13 @@ def handle_select_card(data):
         emit('update_taken_cards', list(game_state["players"].keys()), broadcast=True)
         emit('card_selected', to=request.sid)
 
+
 @socketio.on('bingo')
 def handle_bingo(data):
     player_id = data['sid']
     game_state["started"] = False
     emit("bingo", {"sid": player_id}, broadcast=True)
+
 
 @socketio.on('game_finished')
 def handle_game_finished():
@@ -119,10 +125,7 @@ def handle_game_finished():
     game_state["players"].clear()
     socketio.emit('update_lobby_status', {'status': 'inactive'})
 
-# ---------------------------
-# ✅ For Render Deployment:
-# ---------------------------
+
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Change to your desired port
+    port = int(os.environ.get("PORT", 5000))
     socketio.run(app, host="0.0.0.0", port=port)
-    print(f"Server running on http://127.0.0.1:{port}/")
