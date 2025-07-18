@@ -40,7 +40,7 @@ def call_numbers():
             numbers[letter].remove(number)
             game_state["called_numbers"].add(called_number)
 
-            time.sleep(5)
+            socketio.sleep(5) 
             socketio.emit('call_number', {'number': called_number})
             print(f"Called number: {called_number}")
 
@@ -55,8 +55,7 @@ def start_game_if_ready():
             socketio.sleep(1)
             socketio.emit("game_starting_soon", i)
 
-        thread = Thread(target=call_numbers)
-        thread.start()
+        socketio.start_background_task(call_numbers)  # ✅ instead of Thread
         socketio.emit("game_started")
     else:
         socketio.emit("not_enough_players", {"message": "Waiting for more players..."})
