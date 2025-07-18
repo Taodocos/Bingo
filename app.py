@@ -83,12 +83,16 @@ def handle_player_ready(data):
         game_state["players"][player_id] = data['layout']
         print(f"Current waiting players: {game_state['waiting_players']}")
 
+        # Emit waiting notification
+        print(f"Emitting waiting_notification for player {player_id}.")
         socketio.emit('waiting_notification', {
             'message': f'Player {player_id} is ready. Please wait for the game to start.'
-        }, broadcast=True)
+        })
 
+        # Start timer
         Timer(game_state["waiting_time"], start_game_if_ready).start()
         print("Timer started for checking if the game can start.")
+
 
 @socketio.on('select_card')
 def handle_select_card(data):
