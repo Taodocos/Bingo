@@ -123,6 +123,6 @@ def handle_game_finished():
 # ✅ For Render Deployment:
 # ---------------------------
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))  # Change to your desired port
+    port = int(os.environ.get("PORT", 5000))  # Change to your desired port
     socketio.run(app, host="0.0.0.0", port=port)
     print(f"Server running on http://127.0.0.1:{port}/")
