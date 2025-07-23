@@ -1,48 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo Game Status</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Arada Bingo</title>
+     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="/static/lobby.js"></script>
 </head>
-<body class="bg-gray-100 p-5">
-    <div class="bg-white rounded-lg shadow-md p-6">
-        <h1 class="text-2xl font-bold mb-4">Bingo Game Status</h1>
-        <button id="refresh-button" class="mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Refresh</button>
-        
-        <div class="game mb-4 p-4 border-b border-gray-200 flex justify-between items-center" data-status="active">
-            <div class="game-info">
-                <span class="status text-green-500 font-semibold">Active Game</span>
-                <span class="bonus text-gray-600">Bonus: 20</span>
-                <span class="players text-gray-600">Players: 40</span>
-                <span class="balance text-gray-600">624 ETB</span>
-            </div>
-            <button class="play-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Play</button>
-        </div>
-        
-        <div class="game mb-4 p-4 border-b border-gray-200 flex justify-between items-center" data-status="inactive">
-            <div class="game-info">
-                <span class="status text-red-500 font-semibold">Inactive Game</span>
-                <span class="bonus text-gray-600">Bonus: 50</span>
-                <span class="players text-gray-600">Players: 46</span>
-                <span class="balance text-gray-600">1840 ETB</span>
-            </div>
-            <button class="play-button bg-gray-300 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Play</button>
-        </div>
-        
-        <div class="game mb-4 p-4 border-b border-gray-200 flex justify-between items-center" data-status="active">
-            <div class="game-info">
-                <span class="status text-green-500 font-semibold">Active Game</span>
-                <span class="bonus text-gray-600">Bonus: 100</span>
-                <span class="players text-gray-600">Players: 37</span>
-                <span class="balance text-gray-600">2960 ETB</span>
-            </div>
-            <button class="play-button bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Play</button>
+
+<body class="bg-blue-900 text-white font-sans min-h-screen flex flex-col">
+
+    <!-- Top Bar -->
+    <div class="p-4 bg-blue-700 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Arada Bingo</h1>
+        <div class="flex items-center gap-4">
+            <span class="bg-yellow-400 text-black font-bold px-3 py-1 rounded">125 ETB</span>
+            <button id="refresh-button" class="bg-blue-500 px-4 py-1 rounded hover:bg-blue-600">Refresh</button>
         </div>
     </div>
-    
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <script src="{{ url_for('static', filename='lobby.js') }}"></script>
+
+    <!-- Header Row -->
+    <div class="p-4 bg-orange-500 grid grid-cols-5 text-center font-bold">
+        <div>Stake</div>
+        <div>Active</div>
+        <div>Players</div>
+        <div>Derash</div>
+        <div>Play</div>
+    </div>
+
+    <!-- Game Rows -->
+    <div class="flex flex-col divide-y divide-blue-700">
+        <div class="game grid grid-cols-5 items-center p-4 bg-blue-800" data-status="inactive">
+            <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-xs px-2 py-0.5 rounded">Bonus</span>
+                <span>10</span>
+            </div>
+            <div class="status text-red-400 font-semibold">Ready</div>
+            <div>1</div>
+            <div>10 ETB</div>
+            <button class="play-button bg-gray-400 text-white px-4 py-1 rounded cursor-not-allowed" disabled>Play</button>
+        </div>
+
+        <div class="game grid grid-cols-5 items-center p-4 bg-blue-800" data-status="active">
+            <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-xs px-2 py-0.5 rounded">Bonus</span>
+                <span>20</span>
+            </div>
+            <div class="status text-green-400 font-semibold">Active game 1</div>
+            <div>55</div>
+            <div>880 ETB</div>
+            <button class="play-button bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Play</button>
+        </div>
+
+        <div class="game grid grid-cols-5 items-center p-4 bg-blue-800" data-status="inactive">
+            <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-xs px-2 py-0.5 rounded">Bonus</span>
+                <span>50</span>
+            </div>
+            <div class="status text-orange-400 font-semibold">Low balance</div>
+            <div>30</div>
+            <div>3640 ETB</div>
+            <button class="play-button bg-gray-400 text-white px-4 py-1 rounded cursor-not-allowed" disabled>Play</button>
+        </div>
+
+        <div class="game grid grid-cols-5 items-center p-4 bg-blue-800" data-status="active">
+            <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-xs px-2 py-0.5 rounded">Bonus</span>
+                <span>100</span>
+            </div>
+            <div class="status text-green-400 font-semibold">Active game 2</div>
+            <div>162</div>
+            <div>3040 ETB</div>
+            <button class="play-button bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Play</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto text-center py-4 text-gray-300 text-xs">
+        © Arada Bingo 2024
+    </footer>
+
 </body>
+
 </html>

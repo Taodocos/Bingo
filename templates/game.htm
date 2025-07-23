@@ -14,14 +14,16 @@
 
         .game-container {
             display: flex;
+            flex-direction: row; /* Side by side layout */
             max-width: 1200px;
             margin: 0 auto;
-            gap: 20px;
+            gap: 20px; /* Space between left and right sections */
         }
 
         .left-side {
             flex: 1;
             max-width: 300px;
+            min-width: 250px; /* Prevents shrinking too much */
         }
 
         .main-content {
@@ -68,7 +70,7 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
-        .bingo-header {
+        .bingo-header, .bingo-left-header {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             font-weight: bold;
@@ -76,7 +78,6 @@
             color: white;
             padding: 10px;
             text-align: center;
-            border-radius: 4px 4px 0 0;
         }
 
         .bingo-row {
@@ -115,6 +116,7 @@
             display: flex;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap; /* Allow buttons to wrap */
         }
 
         .controls button {
@@ -123,6 +125,8 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1em;
+            flex: 1; /* Allow buttons to grow equally */
+            margin: 5px; /* Add some margin */
         }
 
         #refresh-btn {
@@ -161,16 +165,6 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-
-        .bingo-left-header {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            font-weight: bold;
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            text-align: center;
         }
 
         .bingo-left-columns {
@@ -220,6 +214,25 @@
             font-weight: bold;
             margin: 10px 0;
             color: #333;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 800px) {
+            .game-container {
+                flex-direction: column; /* Stack for smaller screens */
+            }
+
+            .left-side {
+                max-width: 100%; /* Full width on small screens */
+            }
+
+            .main-content {
+                max-width: 100%; /* Full width on small screens */
+            }
+
+            .controls button {
+                width: 100%; /* Full width buttons */
+            }
         }
     </style>
 </head>
